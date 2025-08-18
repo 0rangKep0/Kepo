@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pernyataan Rahasia</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fbeaff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #container {
+      text-align: center;
+      padding: 20px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 30px;
+      color: #333;
+      transition: opacity 0.6s ease;
+      opacity: 1;
+    }
+
+    .fade-out {
+      opacity: 0;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      border: none;
+      background-color: #ff8fa3;
+      color: white;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff6b88;
+    }
+
+    #noButton {
+      background-color: #ccc;
+      display: none;
+    }
+
+    #noButton:hover {
+      background-color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <h1 id="text">Aku Mau Bilang Sesuatu</h1>
+  <button id="nextButton" onclick="nextText()">Next</button>
+  <button id="noButton" onclick="goToWhatsApp('No')">No</button>
+</div>
+
+<script>
+  const texts = [
+    "I Knew You Would Be Shocked",
+    "But I've Thought It Over",
+    "It might be foreign",
+    "I like you but I can't have you",
+    "Because you already know what you have to go through first",
+    "Hopefully you read this and it won't be strange if you want to."
+  ];
+
+  let index = 0;
+
+  function nextText() {
+    const textElement = document.getElementById("text");
+
+    if (index < texts.length) {
+      textElement.classList.add("fade-out");
+
+      setTimeout(() => {
+        textElement.innerText = texts[index];
+        textElement.classList.remove("fade-out");
+        index++;
+
+        if (index === texts.length) {
+          document.getElementById("nextButton").innerText = "Yes";
+          document.getElementById("nextButton").setAttribute("onclick", "goToWhatsApp('Yes')");
+          document.getElementById("noButton").style.display = "inline-block";
+        }
+      }, 600);
+    }
+  }
+
+  function goToWhatsApp(choice) {
+    let message = choice === "Yes" 
+      ? "I choose Yes 💖" 
+      : "I choose No 😢";
+
+    window.location.href = `https://wa.me/6283133675770?text=${encodeURIComponent(message)}`;
+  }
+</script>
+
+</body>
+  </html>
