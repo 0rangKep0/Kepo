@@ -1,115 +1,188 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pernyataan Rahasia</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Halaman Web Animasi</title>
+  <!-- CDN Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #fbeaff;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
+      /* 🌊 Gradasi bergerak seperti ombak */
+      background: linear-gradient(270deg, #4CAF50, #8BC34A, #2196F3, #3F51B5, #FF9800, #FFC107, #F44336, #E91E63);
+      background-size: 200% 200%;
+      animation: waveBackground 15s ease-in-out infinite;
+      position: relative;
     }
 
-    #container {
-      text-align: center;
+    @keyframes waveBackground {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    #slotbar {
+      width: 80%;
+      max-width: 800px;
       padding: 20px;
-      background-color: white;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    h1 {
-      font-size: 24px;
+      text-align: center;
       margin-bottom: 30px;
-      color: #333;
-      transition: opacity 0.6s ease;
-      opacity: 1;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100px;
     }
 
-    .fade-out {
+    #welcome-text {
       opacity: 0;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .app-container {
+      width: 80%;
+      max-width: 800px;
+      padding: 30px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      background-color: rgba(255, 255, 255, 0.8);
+      overflow: hidden;
     }
 
     button {
-      padding: 10px 20px;
-      margin: 10px;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 8px;
-      border: none;
-      background-color: #ff8fa3;
+      background-color: #2196F3;
       color: white;
-      transition: 0.3s;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    button:hover {
-      background-color: #ff6b88;
+    button:active {
+      background-color: #1976D2;
+      box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
     }
 
-    #noButton {
-      background-color: #ccc;
-      display: none;
+    /* 🔘 Tombol Sosial Media */
+    .social-buttons {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
     }
 
-    #noButton:hover {
-      background-color: #aaa;
+    .social-buttons a {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 22px;
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s forwards;
     }
+
+    /* Animasi muncul ke atas */
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      60% { opacity: 1; transform: translateY(-5px); } /* bounce sedikit */
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Delay untuk tiap tombol */
+    .social-buttons a:nth-child(1) { animation-delay: 0.3s; }
+    .social-buttons a:nth-child(2) { animation-delay: 0.6s; }
+
+    .social-buttons a:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* Warna tombol */
+    .whatsapp { background: #25D366; }
+    .github   { background: #333; 
+      }
   </style>
 </head>
 <body>
+  <div id="slotbar">
+    <span id="welcome-text">Selamat Datang! Di UpAi Dimana Kami Bagikan Script Secara Gratis Dari Upgrade Dari UpAi</span>
+  </div>
+  <div id="app"></div>
 
-<div id="container">
-  <h1 id="text">Aku Mau Bilang Sesuatu</h1>
-  <button id="nextButton" onclick="nextText()">Next</button>
-  <button id="noButton" onclick="goToWhatsApp('No')">No</button>
-</div>
+  <!-- 🔘 Tombol Sosial Media -->
+  <div class="social-buttons">
+    <a href="https://chat.whatsapp.com/H1R0wwjwSAlHdS0LxzV8Id?mode=ac_t" class="whatsapp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://github.com/0rangkep0" class="github" target="_blank"><i class="fab fa-github"></i></a>
+  </div>
 
-<script>
-  const texts = [
-    "I Knew You Would Be Shocked",
-    "But I've Thought It Over",
-    "It might be foreign",
-    "I like you but I can't have you",
-    "Because you already know what you have to go through first",
-    "Hopefully you read this and it won't be strange if you want to."
-  ];
+  <script>
+    const appConfig = [
+      {
+        title: "UpAi",
+        version: "1.0.0",
+        size: "1.14",
+        bantuan: "https://wa.me/62882022896749",
+        namebantuan: "AltUisGo",
+        downloadLink: "https://www.mediafire.com/file/d9nyc9he5nimpp3/UpAi.zip/file",
+        note: "Filtur = dsmenu / YouTube, TikTok, YTMP3, YTMP4, CapCut, Instagram | Bug = Belum Ketahui | Fix = Belum Ketahui"
+      },
+      {
+         title: "UpAi",
+        version: "2.0.0",
+        size: "?",
+        bantuan: "https://wa.me/62882022896749",
+        namebantuan: "AltUisGo",
+        downloadLink: "",
+        note: "Aimenu / fix bug / tampilanmenu / dll"
+      }  
+    ];
 
-  let index = 0;
+    const appContainer = document.getElementById('app');
 
-  function nextText() {
-    const textElement = document.getElementById("text");
+    appConfig.forEach(app => {
+      const appDiv = document.createElement('div');
+      appDiv.classList.add('app-container');
 
-    if (index < texts.length) {
-      textElement.classList.add("fade-out");
+      appDiv.innerHTML = `
+        <h2>${app.title}</h2>
+        <p>Version = ${app.version}<br>MB = ${app.size}</p>
+        <p>Note = ${app.note}</p>
+        <a href="${app.bantuan}" target="_blank">
+          <button>Bantuan ${app.namebantuan}</button>
+        </a>
+        <a href="${app.downloadLink}" download>
+          <button>Download ${app.title}</button>
+        </a>
+      `;
 
-      setTimeout(() => {
-        textElement.innerText = texts[index];
-        textElement.classList.remove("fade-out");
-        index++;
-
-        if (index === texts.length) {
-          document.getElementById("nextButton").innerText = "Yes";
-          document.getElementById("nextButton").setAttribute("onclick", "goToWhatsApp('Yes')");
-          document.getElementById("noButton").style.display = "inline-block";
-        }
-      }, 600);
-    }
-  }
-
-  function goToWhatsApp(choice) {
-    let message = choice === "Yes" 
-      ? "I choose Yes 💖" 
-      : "I choose No 😢";
-
-    window.location.href = `https://wa.me/6283133675770?text=${encodeURIComponent(message)}`;
-  }
-</script>
-
+      appContainer.appendChild(appDiv);
+    });
+  </script>
 </body>
   </html>
