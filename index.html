@@ -15,7 +15,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      /* 🌊 Gradasi bergerak seperti ombak */
       background: linear-gradient(270deg, #4CAF50, #8BC34A, #2196F3, #3F51B5, #FF9800, #FFC107, #F44336, #E91E63);
       background-size: 200% 200%;
       animation: waveBackground 15s ease-in-out infinite;
@@ -107,14 +106,12 @@
       animation: fadeUp 0.8s forwards;
     }
 
-    /* Animasi muncul ke atas */
     @keyframes fadeUp {
       0% { opacity: 0; transform: translateY(30px); }
-      60% { opacity: 1; transform: translateY(-5px); } /* bounce sedikit */
+      60% { opacity: 1; transform: translateY(-5px); }
       100% { opacity: 1; transform: translateY(0); }
     }
 
-    /* Delay untuk tiap tombol */
     .social-buttons a:nth-child(1) { animation-delay: 0.3s; }
     .social-buttons a:nth-child(2) { animation-delay: 0.6s; }
 
@@ -123,10 +120,78 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
-    /* Warna tombol */
     .whatsapp { background: #25D366; }
-    .github   { background: #333; 
-      }
+    .github   { background: #333; }
+
+    /* 🔘 Tombol menu bulat */
+    .menu-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #3498db;
+      color: white;
+      font-size: 24px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      z-index: 1001;
+      transition: transform 0.2s;
+    }
+    .menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Overlay blur */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.3);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 300px;
+      width: 80%;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #2ecc71;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: background 0.3s;
+    }
+    .modal a:hover {
+      background: #27ae60;
+    }
+
+    .close-btn {
+      margin-top: 15px;
+      display: inline-block;
+      color: #555;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -141,6 +206,18 @@
     <a href="https://github.com/0rangkep0" class="github" target="_blank"><i class="fab fa-github"></i></a>
   </div>
 
+  <!-- 🔘 Tombol bulat menu -->
+  <button class="menu-btn" onclick="openModal()">☰</button>
+
+  <!-- Overlay + Modal -->
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <h2>Menu</h2>
+      <a href="script/index.html">Script Gratis</a>
+      <div class="close-btn" onclick="closeModal()">Tutup</div>
+    </div>
+  </div>
+
   <script>
     const appConfig = [
       {
@@ -149,17 +226,17 @@
         size: "1.14",
         bantuan: "https://wa.me/62882022896749",
         namebantuan: "AltUisGo",
-        downloadLink: "https://www.mediafire.com/file/d9nyc9he5nimpp3/UpAi.zip/file",
+        downloadLink: "https://www.mediafire.com/file/d9nyc9he5nimpp3/UpAi_V1.0.0.zip/file",
         note: "Filtur = dsmenu / YouTube, TikTok, YTMP3, YTMP4, CapCut, Instagram | Bug = Belum Ketahui | Fix = Belum Ketahui"
       },
       {
-          title: "UpAi",
+         title: "UpAi",
         version: "1.5.0",
         size: "1.33",
         bantuan: "https://wa.me/62882022896749",
         namebantuan: "AltUisGo",
         downloadLink: "https://www.mediafire.com/file/7drqk6pszfg5vx1/UpAi_V1.5.0.zip/file",
-        note: "Fitur Menu 1 / Fitur 8 / Fix Bug / Tampilan Concole"
+        note: "Fitur Menu 1 / Fitur 8 / Fix Bug"
       }  
     ];
 
@@ -183,6 +260,14 @@
 
       appContainer.appendChild(appDiv);
     });
+
+    const overlay = document.getElementById('overlay');
+    function openModal() {
+      overlay.style.display = 'flex';
+    }
+    function closeModal() {
+      overlay.style.display = 'none';
+    }
   </script>
 </body>
-  </html>
+</html>
