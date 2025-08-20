@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Halaman Script Gratis</title>
+  <!-- CDN Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      background: linear-gradient(to top, #2196F3 0%, #6dd5fa 50%, #ffffff 100%);
+      overflow-y: auto; /* biar bisa scroll ke bawah */
+    }
+
+    /* 🌊 Laut Gelombang */
+    .ocean {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20vh;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .wave {
+      position: absolute;
+      left: 0;
+      width: 200%;
+      height: 100%;
+      background-repeat: repeat-x;
+      bottom: 0;
+      background-size: 50% 100%;
+      animation: waveMove 12s linear infinite;
+    }
+
+    .wave1 {
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%230084d6" d="M0,256L48,234.7C96,213,192,171,288,154.7C384,139,480,149,576,176C672,203,768,245,864,261.3C960,277,1056,267,1152,240C1248,213,1344,171,1392,149.3L1440,128L1440,320L0,320Z"></path></svg>');
+      animation-duration: 12s;
+      opacity: 0.8;
+    }
+
+    .wave2 {
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%2300aaff" fill-opacity="0.7" d="M0,288L60,272C120,256,240,224,360,192C480,160,600,128,720,144C840,160,960,224,1080,240C1200,256,1320,224,1380,208L1440,192L1440,320L0,320Z"></path></svg>');
+      animation-duration: 18s;
+      opacity: 0.6;
+    }
+
+    .wave3 {
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%2300cfff" fill-opacity="0.5" d="M0,224L80,213.3C160,203,320,181,480,176C640,171,800,181,960,197.3C1120,213,1280,235,1360,245.3L1440,256L1440,320L0,320Z"></path></svg>');
+      animation-duration: 25s;
+      opacity: 0.4;
+    }
+
+    @keyframes waveMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    #slotbar {
+      width: 80%;
+      max-width: 800px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 30px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100px;
+      z-index: 1;
+    }
+
+    #welcome-text {
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .app-container {
+      width: 80%;
+      max-width: 800px;
+      padding: 25px;
+      border: 1px solid #ccc;
+      border-radius: 15px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      background-color: rgba(255, 255, 255, 0.95);
+      z-index: 1;
+    }
+
+    button {
+      background-color: #2196F3;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button:active {
+      background-color: #1976D2;
+      box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .social-buttons {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
+      z-index: 2;
+    }
+
+    .social-buttons a {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 22px;
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s forwards;
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      60% { opacity: 1; transform: translateY(-5px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .social-buttons a:nth-child(1) { animation-delay: 0.3s; }
+    .social-buttons a:nth-child(2) { animation-delay: 0.6s; }
+
+    .social-buttons a:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .whatsapp { background: #25D366; }
+    .github   { background: #333; }
+    /* 🔘 Tombol menu bulat */
+    .menu-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #3498db;
+      color: white;
+      font-size: 24px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      z-index: 1001;
+      transition: transform 0.2s;
+    }
+    .menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Overlay blur */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.3);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 300px;
+      width: 80%;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #2ecc71;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: background 0.3s;
+    }
+    .modal a:hover {
+      background: #27ae60;
+    }
+
+    .close-btn {
+      margin-top: 15px;
+      display: inline-block;
+      color: #555;
+      cursor: pointer;
+    }
+ </style>
+</head>
+<body>
+  <!-- 🌊 Laut Wave -->
+  <div class="ocean">
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+  </div>
+
+  <div id="slotbar">
+    <span id="welcome-text">Selamat Datang! Di UpAi Dimana Kami Bagikan Script Secara Gratis Dari Upgrade Dari UpAi</span>
+  </div>
+  <div id="app"></div>
+
+  <!-- 🔘 Tombol Sosial Media -->
+  <div class="social-buttons">
+    <a href="https://chat.whatsapp.com/H1R0wwjwSAlHdS0LxzV8Id?mode=ac_t" class="whatsapp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://github.com/0rangkep0" class="github" target="_blank"><i class="fab fa-github"></i></a>
+  </div>
+
+  <!-- 🔘 Tombol bulat menu -->
+  <button class="menu-btn" onclick="openModal()">☰</button>
+
+  <!-- Overlay + Modal -->
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <h2>Menu</h2>
+      <a href="../index.html">Script UpAi</a>
+      <div class="close-btn" onclick="closeModal()">Tutup</div>
+    </div>
+  </div>
+
+  <script>
+    const appConfig = [
+      { title: "Ryo Yamada", downloadLink: "https://s.id/ryo13" },
+      { title: "HOSHINO V2", downloadLink: "https://s.id/277ak" },
+      { title: "Kyuu V6", downloadLink: "https://s.id/277an" },
+      { title: "Freya MD", downloadLink: "https://s.id/277ar" },
+      { title: "ITS Botz", downloadLink: "https://s.id/277at" },
+      { title: "Miku Bot", downloadLink: "https://s.id/277aw" },
+      { title: "Izumi MD", downloadLink: "https://s.id/277aA" },
+      { title: "Luffy MD", downloadLink: "https://s.id/277aB" },
+      { title: "Gojo MD", downloadLink: "https://s.id/277aD" },
+      { title: "Sukuna MD", downloadLink: "https://s.id/277aG" },
+      { title: "Nahida V2.9", downloadLink: "https://s.id/277aK" },
+      { title: "Yuta MD", downloadLink: "https://s.id/277aN" },
+      { title: "OFFMON MD", downloadLink: "https://s.id/277aO" },
+      { title: "ELAINA AI V4", downloadLink: "https://s.id/277OP" },
+      { title: "MIDORIYA MD", downloadLink: "https://s.id/277f6" },
+      { title: "NINOMAE MD", downloadLink: "https://s.id/27slo" },
+      { title: "VEEMON MD", downloadLink: "https://s.id/27Ne7" },
+      { title: "Nekomimi CP", downloadLink: "https://s.id/281Vv" },
+      { title: "ELAINA V5", downloadLink: "https://s.id/285u9" },
+      { title: "Hanako MD", downloadLink: "https://s.id/28kTn" },
+      { title: "Freyana MD", downloadLink: "https://s.id/28kTl" },
+      { title: "Christy MD", downloadLink: "https://s.id/28tmO" },
+      { title: "Ganyu MD", downloadLink: "https://s.id/28JWm" },
+      { title: "Yae Miko MD", downloadLink: "https://s.id/298ye" },
+      { title: "Veemon V2.1", downloadLink: "https://s.id/29DaP" },
+      { title: "Zero Two MD", downloadLink: "https://s.id/plxJe" },
+      { title: "Shinobu MD", downloadLink: "https://s.id/l6eiT" },
+      { title: "Ritsu MD", downloadLink: "https://s.id/QznjB" },
+      { title: "Aru MD", downloadLink: "https://s.id/8OgzA" },
+      { title: "GawrGura MD", downloadLink: "https://s.id/ZJTpm" },
+      { title: "GawrGuraV2", downloadLink: "https://s.id/qsvtJ" },
+      { title: "Power MD", downloadLink: "https://s.id/C0C2z" },
+      { title: "Eresh MD", downloadLink: "https://s.id/lgj3N" },
+      { title: "Shenhe MD", downloadLink: "https://s.id/EFuB7" },
+      { title: "Itadori MD", downloadLink: "https://s.id/epI5u" },
+      { title: "Ayaka MD", downloadLink: "https://s.id/HIvrh" },
+      { title: "Gumdramon", downloadLink: "https://s.id/amD1j" },
+      { title: "Mitsuki", downloadLink: "https://s.id/kV51Q" },
+      { title: "SimpleBotV5", downloadLink: "https://s.id/CS52b" },
+      { title: "MadaraMD", downloadLink: "https://s.id/R80V5" },
+      { title: "SimpleBotV6", downloadLink: "https://s.id/POAMi" },
+      { title: "Yuzuki", downloadLink: "https://s.id/jwgjg" },
+      { title: "Rengoku", downloadLink: "https://s.id/17cyP" },
+      { title: "SukunaV2", downloadLink: "https://s.id/UoiXz" },
+      { title: "Hoshino-MD", downloadLink: "https://s.id/JMSB7" },
+      { title: "Haruka-CP", downloadLink: "https://s.id/V5VaS" },
+      { title: "Shamiru-CP", downloadLink: "https://s.id/8yyti" },
+      { title: "KotoriMD", downloadLink: "https://s.id/QytfI" },
+      { title: "ZeroTwo-V2", downloadLink: "https://s.id/bErxS" },
+      { title: "Ryo-V2", downloadLink: "https://s.id/4wJQb" },
+      { title: "Cartethyia", downloadLink: "https://s.id/yERjd" },
+      { title: "Arlecchino", downloadLink: "https://s.id/7ldkM" }
+    ];
+
+    const appContainer = document.getElementById('app');
+
+    appConfig.forEach(app => {
+      const appDiv = document.createElement('div');
+      appDiv.classList.add('app-container');
+
+      appDiv.innerHTML = `
+        <h2>${app.title}</h2>
+        <a href="${app.downloadLink}" target="_blank">
+          <button>Download ${app.title}</button>
+        </a>
+      `;
+
+      appContainer.appendChild(appDiv);
+    });
+    
+   const overlay = document.getElementById('overlay');
+    function openModal() {
+      overlay.style.display = 'flex';
+    }
+    function closeModal() {
+      overlay.style.display = 'none';
+    } 
+  </script>
+</body>
+</html>
