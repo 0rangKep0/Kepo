@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Halaman Script Gratis</title>
+  <title>Halaman Web Animasi</title>
   <!-- CDN Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -228,9 +228,35 @@
       color: #555;
       cursor: pointer;
     }
+#search-bar {
+  width: 80%;
+  max-width: 600px;
+  margin-bottom: 20px;
+  text-align: center;
+  z-index: 2;
+}
+
+#search-bar input {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.3s;
+}
+
+#search-bar input:focus {
+  border-color: #2196F3;
+  box-shadow: 0 0 6px rgba(33,150,243,0.4);
+}    
  </style>
 </head>
 <body>
+  <!-- Tambahkan di atas #app -->
+<div id="search-bar">
+  <input type="text" id="searchInput" placeholder="Cari script... (contoh: Mora, MD, V2)">
+</div>
   <!-- 🌊 Laut Wave -->
   <div class="ocean">
     <div class="wave wave1"></div>
@@ -239,7 +265,7 @@
   </div>
 
   <div id="slotbar">
-    <span id="welcome-text">Selamat Datang! Di Tempat Dimana Kami Bagikan Script Secara Gratis</span>
+    <span id="welcome-text">Selamat Datang! Di UpAi Dimana Kami Bagikan Script Secara Gratis Dari Upgrade Dari UpAi</span>
   </div>
   <div id="app"></div>
 
@@ -252,15 +278,16 @@
   <!-- 🔘 Tombol bulat menu -->
   <button class="menu-btn" onclick="openModal()">☰</button>
 
-  <!-- Overlay + Modal -->
+  <!-- 🔹 Overlay + Modal -->
   <div class="overlay" id="overlay">
     <div class="modal">
       <h2>Menu</h2>
       <a href="../index.html">Script UpAi</a>
+      <a href="cekpesanan/index.html">Cek Pesananmu</a>     
       <div class="close-btn" onclick="closeModal()">Tutup</div>
     </div>
   </div>
-
+  
   <script>
     const appConfig = [
       { title: "Ryo Yamada", downloadLink: "https://s.id/ryo13" },
@@ -314,7 +341,23 @@
       { title: "ZeroTwo-V2", downloadLink: "https://s.id/bErxS" },
       { title: "Ryo-V2", downloadLink: "https://s.id/4wJQb" },
       { title: "Cartethyia", downloadLink: "https://s.id/yERjd" },
-      { title: "Arlecchino", downloadLink: "https://s.id/7ldkM" }
+      { title: "Arlecchino", downloadLink: "https://s.id/7ldkM" },
+      { title: "MoraAI V15 DE4YOU",
+        downloadlink: "https://s.id/4IbvM" },
+      { title: "NanoBotz V5",
+        downloadlink: "https://s.id/gp1GY" },
+      { title: "NanoBotz V6",
+        downloadlink: "https://s.id/tX0zV" },
+      { title: "MoraAI V10",
+        downloadlink: "https://tinyurl.com/ylvse79q" },
+      { title: "Alya Chuantek",
+        downloadlink: "https://tinyurl.com/yuolpe3j" },
+      { title: "Vertin Cpanel",
+        downloadlink: "https://tinyurl.com/yujabuzz" },
+      { title: "Terakomari MD",
+        downloadlink: "https://tinyurl.com/ypx8efdt" },
+      { title: "ShikimoriMD",
+        downloadlink: "https://tinyurl.com/yvcwzqa7" }
     ];
 
     const appContainer = document.getElementById('app');
@@ -333,6 +376,23 @@
       appContainer.appendChild(appDiv);
     });
     
+ // 🔍 Fungsi pencarian
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("input", function () {
+  const query = this.value.toLowerCase();
+  const appDivs = document.querySelectorAll(".app-container");
+
+  appConfig.forEach((app, index) => {
+    const title = app.title.toLowerCase();
+    if (title.includes(query)) {
+      appDivs[index].style.display = "block"; // tampilkan
+    } else {
+      appDivs[index].style.display = "none"; // sembunyikan
+    }
+  });
+});
+    
    const overlay = document.getElementById('overlay');
     function openModal() {
       overlay.style.display = 'flex';
@@ -342,4 +402,4 @@
     } 
   </script>
 </body>
-</html>
+  </html>
