@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Produk</title>
+  <script src="config.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #fff;
+    }
+
+    /* 🔹 Navbar */
+    .navbar {
+      background: #1e1e1e;
+      padding: 15px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #00bcd4;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    }
+
+    /* 🔹 Card Produk */
+    .container {
+      margin: 20px;
+      padding: 20px;
+      background: #1e1e1e;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+    .container h3 {
+      margin: 0 0 15px 0;
+      color: #00bcd4;
+    }
+    .detail {
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .expired {
+      color: #e53935;
+      font-weight: bold;
+    }
+    .btn-wa {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 15px;
+      background: #00bcd4;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .btn-wa:hover {
+      background: #0097a7;
+    }
+
+    /* 🔘 Tombol menu bulat */
+    .menu-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #3498db;
+      color: #fff;
+      font-size: 24px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      z-index: 1001;
+      transition: transform 0.2s;
+    }
+    .menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* 🔹 Overlay + Modal */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.3);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal {
+      background: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 300px;
+      width: 80%;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+      animation: fadeIn 0.3s ease;
+    }
+    .modal h2 {
+      margin: 0 0 20px 0;
+      color: #333;
+    }
+    .modal a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 5px 0;
+      background: #2ecc71;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: background 0.3s;
+    }
+    .modal a:hover {
+      background: #27ae60;
+    }
+    .close-btn {
+      margin-top: 15px;
+      display: inline-block;
+      color: #555;
+      cursor: pointer;
+    }
+
+    /* 🔹 Tombol Sosial Media */
+    .social-buttons {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
+      z-index: 2;
+    }
+    .social-buttons a {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 22px;
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s forwards;
+    }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      60% { opacity: 1; transform: translateY(-5px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .social-buttons a:nth-child(1) { animation-delay: 0.3s; }
+    .social-buttons a:nth-child(2) { animation-delay: 0.6s; }
+    .social-buttons a:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .whatsapp { background: #25D366; }
+    .github { background: #333; }
+  </style>
+</head>
+<body>
+
+  <!-- 🔘 Tombol bulat menu -->
+  <button class="menu-btn" onclick="openModal()">☰</button>
+
+  <!-- 🔹 Overlay + Modal -->
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <h2>Menu</h2>
+      <a href="script/index.html">Script Gratis</a>
+      <a href="../index.html">Script UpAi</a>
+      <div class="close-btn" onclick="closeModal()">Tutup</div>
+    </div>
+  </div>
+  
+  <!-- 🔹 Navbar -->
+  <div class="navbar" id="navbar">Dashboard Produk</div>
+
+  <!-- 🔹 List Produk -->
+  <div id="produkList"></div>
+
+  <div id="app"></div>
+
+  <!-- 🔹 Tombol Sosial Media -->
+  <div class="social-buttons">
+    <a href="https://chat.whatsapp.com/H1R0wwjwSAlHdS0LxzV8Id?mode=ac_t" class="whatsapp" target="_blank">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="https://github.com/0rangkep0" class="github" target="_blank">
+      <i class="fab fa-github"></i>
+    </a>
+  </div>
+  
+  <script>
+    // 🔹 Cek login
+    let loggedUser = localStorage.getItem("loggedUser");
+    if (!loggedUser) window.location.href = "login.html";
+
+    document.getElementById("navbar").textContent = "Welcome, " + loggedUser;
+
+    // 🔹 Tampilkan produk
+    let produkList = document.getElementById("produkList");
+    let user = users.find(u => u.username === loggedUser);
+
+    if (!user || user.produk.length === 0) {
+      produkList.innerHTML = `
+        <div class="container"><h3>Belum ada produk</h3></div>
+      `;
+    } else {
+      user.produk.forEach(item => {
+        let div = document.createElement("div");
+        div.className = "container";
+        div.innerHTML = `
+          <h3>Produk: ${item.produk}</h3>
+          <div class="detail">Harga Produk: ${item.harga}</div>
+          <div class="detail">Tanggal Beli: ${item.beli}</div>
+          <div class="detail">
+            Tanggal Expired: 
+            <span class="${checkExpired(item.expired) === 'Sudah expired' ? 'expired' : ''}">
+              ${checkExpired(item.expired)}
+            </span>
+          </div>
+          <div class="detail">
+            Batas Garansi: 
+            <span class="${checkExpired(item.garansi) === 'Sudah expired' ? 'expired' : ''}">
+              ${checkExpired(item.garansi)}
+            </span>
+          </div>
+          <a class="btn-wa" href="https://wa.me/6283133675770" target="_blank">Hubungi Admin</a>
+        `;
+        produkList.appendChild(div);
+      });
+    }
+    
+    // 🔹 Modal handler
+    const overlay = document.getElementById("overlay");
+    function openModal() {
+      overlay.style.display = "flex";
+    }
+    function closeModal() {
+      overlay.style.display = "none";
+    }
+  </script>
+</body>
+  </html>
